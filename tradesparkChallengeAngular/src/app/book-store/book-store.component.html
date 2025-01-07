@@ -1,0 +1,24 @@
+<div class="background-image">
+    <h1> Book Store </h1>
+    <div class="book-list">
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Book Title</th>
+                        <th>Author</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let book of books">
+                        <td>{{ book["title"] }}</td>
+                        <td>{{ book["author"]["name"] }}</td>
+                        <td>{{ categoriesToString(book['categories']) }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
