@@ -15,7 +15,13 @@
                     <tr *ngFor="let book of books">
                         <td>{{ book["title"] }}</td>
                         <td>{{ book["author"]["name"] }}</td>
-                        <td>{{ categoriesToString(book['categories']) }}</td>
+                        <td class="category-col">
+                            <app-label-category *ngFor="let category of book.categories"
+                            [id]="book.id"
+                            [textContent]="category.name"
+                            (onClick)="handleClickLabel($event)"
+                            ></app-label-category>
+                        </td>
                     </tr>
                 </tbody>
             </table>

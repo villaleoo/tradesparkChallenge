@@ -1,1 +1,11 @@
-<p>label-category works!</p>
+<div class="label-category">
+    <p class="text-label">{{textContent}}</p>
+    <button 
+    (mouseenter)="hover = true" 
+    (mouseleave)="hover = false" 
+    (click)="handleOnClick()">
+        <span
+        [style.background-color]="hover ? '#dc3545' : '#29b7da'"
+        >x</span>
+    </button>
+</div>

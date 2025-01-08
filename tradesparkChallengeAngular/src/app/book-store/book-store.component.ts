@@ -29,15 +29,22 @@ export class BookStoreComponent implements OnInit, OnDestroy{
     }
   }
 
-  categoriesToString(categories: any[]): string {
-    let categoriesString = "";
-    categories.forEach((category, index) => {
-      categoriesString += category.name;
-      if (index < categories.length - 1) {
-        categoriesString += ", ";
+
+  handleClickLabel(dataLabel: any){
+    const book = this.books.find(b => Number(b.id) === Number(dataLabel.id));
+
+    if(book?.categories && book.categories.length > 0){
+      const index = this.books.indexOf(book);
+      const category = book.categories.find(c=> c.name.toLowerCase() === dataLabel.category.toLowerCase());
+
+      if(category){
+        const indexCat = book.categories.indexOf(category);
+        this.books[index].categories?.splice(indexCat,1);
       }
-    });
-    return categoriesString;
+      
+    }
+   
+   
   }
 
   onFilterChange(query: string) {
