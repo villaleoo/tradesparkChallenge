@@ -21,7 +21,7 @@ class BookViewSet(viewsets.ModelViewSet):
     serializer_class = BookSerializer
     http_method_names = ['get', 'post', 'put', 'patch', 'delete']  
     
-    @action(detail= True, methods=['patch','put'], url_path="category")
+    @action(detail= True, methods=['patch','put'], url_path="categories")
     def alternate_category(self, request, pk=None):
 
         try:
