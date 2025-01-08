@@ -1,21 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BookStoreService } from '../book-store.service';
+import { Book } from '../types';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-book-store',
   templateUrl: './book-store.component.html',
   styleUrls: ['./book-store.component.css']
 })
-export class BookStoreComponent implements OnInit {
+export class BookStoreComponent implements OnInit, OnDestroy{
+  filterQuery: string = '';
+  books: Book[] = [];
+  private bookSubscription: Subscription;
 
-  books: any[] = [];
 
   constructor(private bookStoreService: BookStoreService) { }
 
   ngOnInit(): void {
-    this.bookStoreService.getBooks().subscribe((data: any[]) => {
-      this.books = data; 
-    })
+    this.bookSubscription = this.bookStoreService.getLeakedBooks().subscribe((data: Book[]) => {
+      this.books = data;
+    });
+    
+  }
+
+  ngOnDestroy(): void {
+    if(this.bookSubscription) {
+      this.bookSubscription.unsubscribe();
+    }
   }
 
   categoriesToString(categories: any[]): string {
@@ -27,6 +38,10 @@ export class BookStoreComponent implements OnInit {
       }
     });
     return categoriesString;
+  }
+
+  onFilterChange(query: string) {
+    this.bookStoreService.filterBooks(query);  
   }
 
 
