@@ -24,20 +24,23 @@ export class BookStoreService {
             this.leakedBooks.next(this.primaryBooks);
           })
         )
-      .subscribe();
+      .subscribe({
+        error: (err) => console.error('Error fetch API:', err),
+      });
     }
 
     getLeakedBooks() {
-      if(this.primaryBooks=[]){   //si no hay data la manda a pedir
-        this.fetchBooks();
+      if (this.primaryBooks.length === 0) {  
+        this.fetchBooks();  
       }
-
-      return this.leakedBooks;             
+    
+      return this.leakedBooks.asObservable();         
     }
 
     filterBooks(query: string) {
       if (query === '') {
           this.leakedBooks.next(this.primaryBooks);
+
       } else {
 
         const filterBooks = this.primaryBooks.filter(book => 
@@ -51,7 +54,28 @@ export class BookStoreService {
         }else{
           this.leakedBooks.next(this.primaryBooks);
         }
+
       }
+    }
+
+    updateCategories(data: any) {
+      const requestBody = { category_name: `${data.category.toLowerCase()}` };
+    
+      this.client.patch<Book>(`${this.BASE_URL}books/${data.id}/categories/`, requestBody)
+        .pipe(
+          tap((updatedBook) => {
+            const index = this.primaryBooks.findIndex(book => book.id === updatedBook.id);
+    
+            if (index !== -1) {
+              this.primaryBooks.splice(index,1,updatedBook);
+              
+              this.leakedBooks.next(this.primaryBooks);
+            }
+          })
+        )
+        .subscribe({
+          error: (err) => console.error('Error updating book:', err),
+        });
     }
 
  

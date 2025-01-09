@@ -12,7 +12,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let book of books">
+                    <tr *ngFor="let book of books$ | async">
                         <td>{{ capitalizeFirst(book["title"]) }}</td>
                         <td>{{ capitalizeTitle(book["author"]["name"]) }}</td>
                         <td class="category-col">

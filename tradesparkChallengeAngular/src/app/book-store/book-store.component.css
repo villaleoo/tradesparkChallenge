@@ -59,7 +59,6 @@ table > tbody > tr {
 table > tbody > tr > td{
     min-height: 25px;
     min-width: 25vh;
-    max-width: 600px;
 }
 
 .search-bar{
