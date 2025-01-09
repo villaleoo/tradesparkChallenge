@@ -22,4 +22,23 @@ describe('LabelCategoryComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should display the correct text content', () => {
+    component.textContent = 'New Category';
+    fixture.detectChanges(); 
+
+    const textLabel = fixture.nativeElement.querySelector('.text-label');
+    expect(textLabel.textContent).toBe('New Category');
+  });
+
+  
+  it('should call handleOnClick when button is clicked', () => {
+    spyOn(component, 'handleOnClick'); 
+
+    const buttonElement = fixture.nativeElement.querySelector('button');
+    buttonElement.click(); 
+
+    expect(component.handleOnClick).toHaveBeenCalled();
+  });
+
 });

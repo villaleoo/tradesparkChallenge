@@ -22,4 +22,27 @@ describe('SearchBarComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should initialize searchQuery as an empty string', () => {
+    expect(component.searchQuery).toBe('');
+  });
+
+  it('should update searchQuery on input change', () => {
+    const inputElement = fixture.nativeElement.querySelector('input');
+    
+    inputElement.value = 'New Title';
+    inputElement.dispatchEvent(new Event('input')); 
+
+    expect(component.searchQuery).toBe('New Title');
+  });
+
+  it('should call onSearchChange when input changes', () => {
+    spyOn(component, 'onSearchChange'); 
+
+    const inputElement = fixture.nativeElement.querySelector('input');
+    inputElement.value = 'Other Title';
+    inputElement.dispatchEvent(new Event('input'));
+
+    expect(component.onSearchChange).toHaveBeenCalled();
+  });
 });
