@@ -13,8 +13,8 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let book of books">
-                        <td>{{ book["title"] }}</td>
-                        <td>{{ book["author"]["name"] }}</td>
+                        <td>{{ capitalizeFirst(book["title"]) }}</td>
+                        <td>{{ capitalizeTitle(book["author"]["name"]) }}</td>
                         <td class="category-col">
                             <app-label-category *ngFor="let category of book.categories"
                             [id]="book.id"
