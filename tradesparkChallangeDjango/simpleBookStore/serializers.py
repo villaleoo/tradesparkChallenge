@@ -36,3 +36,10 @@ class BookSerializer(CapitalizeFieldsMixin, serializers.ModelSerializer):
             category = Category.objects.get(**category_data)
             book.categories.add(category)
         return book
+    
+class AlternateCategorySerializer(serializers.Serializer):
+    category_name = serializers.CharField(
+        required=True,
+        max_length=255, 
+        help_text="Name of the category you want to add or delete."
+    )
