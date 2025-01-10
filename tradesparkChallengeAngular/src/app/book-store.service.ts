@@ -5,19 +5,33 @@ import { BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 
-
+/**
+ * Servicio que interactura con la API y permite operar sobre el recurso Book.
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class BookStoreService {
     private BASE_URL= 'http://localhost:8000/bookStore/';
+    /**
+     * Almacena localmente la totalidad de los libros obtenidos de la API.
+     */
     private primaryBooks: Book[] = [];
-    private leakedBooks: BehaviorSubject<Book[]> = new BehaviorSubject<Book[]>([]); //suscribirse a los libros filtrados cuando cambian al activarse el filtro
+     /**
+     * Almacena la totalidad de los libros obtenidos ó la lista de libros filtrada.
+     * Emite cambios a los componentes suscriptos.
+     */
+    private leakedBooks: BehaviorSubject<Book[]> = new BehaviorSubject<Book[]>([]);
 
     constructor(private client: HttpClient) { }
 
+    /**
+     * Obtiene la lista completa de libros de la API.
+     * Almacena en las variables primaryBooks y leakedBooks la lista completa obtenida.
+     * Emite un cambio en la lista de la variable Observable.
+     */
     fetchBooks(){
-      this.client.get<Book[]>(`${this.BASE_URL}books/`)       // funcion que obtiene los datos de la API
+      this.client.get<Book[]>(`${this.BASE_URL}books/`)       
         .pipe(
           tap((books) =>{ 
             this.primaryBooks=books;
@@ -29,6 +43,11 @@ export class BookStoreService {
       });
     }
 
+    /**
+     * Retorna la lista filtrada de libros.
+     * Si no hay elementos iniciales, ejecuta fetchBooks() para traerlos de la API.
+     * @returns Lista de libros filtrada. Es de tipo Observable para poder suscribirse a cambios en la lista.
+     */
     getLeakedBooks() {
       if (this.primaryBooks.length === 0) {  
         this.fetchBooks();  
@@ -37,6 +56,13 @@ export class BookStoreService {
       return this.leakedBooks.asObservable();         
     }
 
+     /**
+     * Retorna la lista de libros que contienen en su titulo, autor o categorias el parametro string 'query'.
+     * Si no hay libros que coinicidan con la busqueda, retorna la lista completa de libros.
+     * @param query Contenido que ingresa el usuario en un input de texto.
+     * @returns Emite un cambio en la lista de la variable Observable. Lista completa de libros ó Lista filtrada.
+     */
+
     filterBooks(query: string) {
       if (query === '') {
           this.leakedBooks.next(this.primaryBooks);
@@ -44,9 +70,9 @@ export class BookStoreService {
       } else {
 
         const filterBooks = this.primaryBooks.filter(book => 
-          book.title.toLowerCase().includes(query.toLowerCase()) ||           //si la query la contiene el titulo del libro
-          book.author.name.toLowerCase().includes(query.toLowerCase()) ||             //si la query la contiene el nombre del autor del libro
-          (book.categories && book.categories.some(cat => cat.name.toLowerCase().includes(query.toLowerCase())) )  //si la query la contiene el nombre de alguna de las categorias del libro
+          book.title.toLowerCase().includes(query.toLowerCase()) ||           
+          book.author.name.toLowerCase().includes(query.toLowerCase()) ||             
+          (book.categories && book.categories.some(cat => cat.name.toLowerCase().includes(query.toLowerCase())) )  
         );
 
         if(filterBooks.length > 0){
@@ -57,6 +83,13 @@ export class BookStoreService {
 
       }
     }
+
+    /**
+     * Recibe por parametro el id de un libro y el nombre de una categoria que posee el libro, para eliminar la relación en la API.
+     * Modifica la lista local primaryBooks insertando el libro con sus categorias actualizadas.
+     * @param data Objeto que debe contener el id de un libro y el nombre de la categoria a eliminar -> {id:1,category:"example"}.
+     * @returns Emite un cambio en la lista de la variable Observable.
+     */
 
     updateCategories(data: any) {
       const requestBody = { category_name: `${data.category.toLowerCase()}` };

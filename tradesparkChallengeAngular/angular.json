@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "tradesparkChallengeAngular"
+    }
+  },
+  "defaultProject": "tradesparkChallengeAngular",
+  "cli": {
+    "analytics": "1e89d5f3-eef0-4ea1-b5c7-1e5050aa41bc"
+  }
 }
