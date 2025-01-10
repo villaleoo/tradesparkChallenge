@@ -414,17 +414,14 @@
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Se ejecuta cuando se hace click en el button del template.</p>
+                        <div class="io-description"><p>A traves de onClick, ejecuta la funcion del padre y le envia el id de esta etiqueta y su contenido (textContent) de tipo string.
+Se ejecuta cuando se hace click en el button del template.</p>
 </div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
-                            <div class="io-description">
-                                <p>Emite un evento que contiene el id de la etiqueta y su contenido de tipo string.</p>
-
-                            </div>
                 </td>
             </tr>
         </tbody>
@@ -556,8 +553,8 @@ export class LabelCategoryComponent implements OnInit {
   }
 
   /**
+   * A traves de onClick, ejecuta la funcion del padre y le envia el id de esta etiqueta y su contenido (textContent) de tipo string.
    * Se ejecuta cuando se hace click en el button del template.
-   * @returns Emite un evento que contiene el id de la etiqueta y su contenido de tipo string. 
    */
   handleOnClick(): void{
 

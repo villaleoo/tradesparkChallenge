@@ -368,17 +368,14 @@
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Obtiene los caracteres ingresados por el usuario en el input del template.</p>
+                        <div class="io-description"><p>A traves de searchChange, ejecuta la funcion del padre y le envia el string ingresado en el input html.
+Obtiene los caracteres ingresados por el usuario en el input del template.</p>
 </div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
-                            <div class="io-description">
-                                <p>Ejecuta la funcion del padre y le envia el string ingresado en el input html.</p>
-
-                            </div>
                 </td>
             </tr>
         </tbody>
@@ -459,8 +456,8 @@ export class SearchBarComponent implements OnInit {
   }
 
   /**
+   * A traves de searchChange, ejecuta la funcion del padre y le envia el string ingresado en el input html.
    * Obtiene los caracteres ingresados por el usuario en el input del template.
-   * @returns Ejecuta la funcion del padre y le envia el string ingresado en el input html.
    */
   onSearchChange() {
     this.searchChange.emit(this.searchQuery); 

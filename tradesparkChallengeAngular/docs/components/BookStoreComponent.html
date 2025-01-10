@@ -457,6 +457,8 @@
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Se comunica con el servicio de libros -&gt; <a href="../injectables/BookStoreService.html">BookStoreService</a> y le pasa la informacion que le da la etiqueta.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -495,8 +497,7 @@
 
                         </div>
                             <div class="io-description">
-                                <p>Se comunica con el servicio de libros -&gt; {@link BookStoreService} y le pasa la informacion que le da la etiqueta.</p>
-
+                                
                             </div>
                 </td>
             </tr>
@@ -571,7 +572,8 @@ ser completa.</p>
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>El parametro lo recibe desde la barra de busqueda: <a href="../components/SearchBarComponent.html">SearchBarComponent</a> .</p>
+                        <div class="io-description"><p>Se comunica con el servicio de libros <a href="../injectables/BookStoreService.html">BookStoreService</a> para enviarle la query que es utilizada para filtrar la tabla.
+El parametro lo recibe desde la barra de busqueda: <a href="../components/SearchBarComponent.html">SearchBarComponent</a> .</p>
 </div>
 
                             <div class="io-description">
@@ -611,8 +613,7 @@ ser completa.</p>
 
                         </div>
                             <div class="io-description">
-                                <p>Se comunica con el servicio de libros {@link BookStoreService} para enviarle la query que es utilizada para filtrar la tabla.</p>
-
+                                
                             </div>
                 </td>
             </tr>
@@ -737,8 +738,8 @@ export class BookStoreComponent implements OnInit{
   }
 
   /**
+   * Se comunica con el servicio de libros -&gt; {@link BookStoreService} y le pasa la informacion que le da la etiqueta.
    * @param bookData Contiene id y nombre de la categoria de un libro. Proviene de la etiqueta {@link LabelCategoryComponent#onClick} clickeada.
-   * @returns Se comunica con el servicio de libros -&gt; {@link BookStoreService} y le pasa la informacion que le da la etiqueta.
    */
   handleClickLabel(bookData: any){
  
@@ -762,9 +763,9 @@ export class BookStoreComponent implements OnInit{
   }
 
   /**
+   * Se comunica con el servicio de libros {@link BookStoreService} para enviarle la query que es utilizada para filtrar la tabla.
    * El parametro lo recibe desde la barra de busqueda: {@link SearchBarComponent} .
    * @param query String ingresado por el usuario que se utiliza para filtrar el contenido de la tabla del template. 
-   * @returns  Se comunica con el servicio de libros {@link BookStoreService} para enviarle la query que es utilizada para filtrar la tabla.
    */
   onFilterChange(query: string) {
     this.bookStoreService.filterBooks(query);  

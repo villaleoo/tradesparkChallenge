@@ -263,17 +263,17 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="33"
-                                    class="link-to-prism">src/app/book-store.service.ts:33</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="34"
+                                    class="link-to-prism">src/app/book-store.service.ts:34</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Obtiene la lista completa de libros de la API.
-Almacena en las variables primaryBooks y leakedBooks la lista completa obtenida.
-Emite un cambio en la lista de la variable Observable.</p>
+                        <div class="io-description"><p>Emite un cambio en la lista de la variable Observable.</p>
+<p>Obtiene la lista completa de libros de la API.
+Almacena en las variables primaryBooks y leakedBooks la lista completa obtenida.</p>
 </div>
 
                         <div class="io-description">
@@ -304,15 +304,16 @@ Emite un cambio en la lista de la variable Observable.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="66"
-                                    class="link-to-prism">src/app/book-store.service.ts:66</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="67"
+                                    class="link-to-prism">src/app/book-store.service.ts:67</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Retorna la lista de libros que contienen en su titulo, autor o categorias el parametro string &#39;query&#39;.
+                        <div class="io-description"><p>Emite un cambio en la lista de la variable Observable. Lista completa de libros ó Lista filtrada.</p>
+<p>Itera la lista de libros para encontrar los que contienen en su titulo, autor o categorias el parametro string &#39;query&#39;.
 Si no hay libros que coinicidan con la busqueda, retorna la lista completa de libros.</p>
 </div>
 
@@ -353,8 +354,7 @@ Si no hay libros que coinicidan con la busqueda, retorna la lista completa de li
 
                         </div>
                             <div class="io-description">
-                                <p>Emite un cambio en la lista de la variable Observable. Lista completa de libros ó Lista filtrada.</p>
-
+                                
                             </div>
                 </td>
             </tr>
@@ -388,8 +388,7 @@ Si no hay libros que coinicidan con la busqueda, retorna la lista completa de li
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Retorna la lista filtrada de libros.
-Si no hay elementos iniciales, ejecuta fetchBooks() para traerlos de la API.</p>
+                        <div class="io-description"><p>Si no hay elementos iniciales, ejecuta fetchBooks() para traerlos de la API.</p>
 </div>
 
                         <div class="io-description">
@@ -424,15 +423,16 @@ Si no hay elementos iniciales, ejecuta fetchBooks() para traerlos de la API.</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="94"
-                                    class="link-to-prism">src/app/book-store.service.ts:94</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="96"
+                                    class="link-to-prism">src/app/book-store.service.ts:96</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Recibe por parametro el id de un libro y el nombre de una categoria que posee el libro, para eliminar la relación en la API.
+                        <div class="io-description"><p>Emite un cambio en la lista de la variable Observable.</p>
+<p>Recibe por parametro el id de un libro y el nombre de una categoria que posee el libro, para eliminar la relación en la API.
 Modifica la lista local primaryBooks insertando el libro con sus categorias actualizadas.</p>
 </div>
 
@@ -473,8 +473,7 @@ Modifica la lista local primaryBooks insertando el libro con sus categorias actu
 
                         </div>
                             <div class="io-description">
-                                <p>Emite un cambio en la lista de la variable Observable.</p>
-
+                                
                             </div>
                 </td>
             </tr>
@@ -629,9 +628,10 @@ export class BookStoreService {
     constructor(private client: HttpClient) { }
 
     /**
+     * Emite un cambio en la lista de la variable Observable.
+     * 
      * Obtiene la lista completa de libros de la API.
      * Almacena en las variables primaryBooks y leakedBooks la lista completa obtenida.
-     * Emite un cambio en la lista de la variable Observable.
      */
     fetchBooks(){
       this.client.get&lt;Book[]&gt;(&#x60;${this.BASE_URL}books/&#x60;)       
@@ -647,7 +647,6 @@ export class BookStoreService {
     }
 
     /**
-     * Retorna la lista filtrada de libros.
      * Si no hay elementos iniciales, ejecuta fetchBooks() para traerlos de la API.
      * @returns Lista de libros filtrada. Es de tipo Observable para poder suscribirse a cambios en la lista.
      */
@@ -660,10 +659,11 @@ export class BookStoreService {
     }
 
      /**
-     * Retorna la lista de libros que contienen en su titulo, autor o categorias el parametro string &#x27;query&#x27;.
+     * Emite un cambio en la lista de la variable Observable. Lista completa de libros ó Lista filtrada.
+     * 
+     * Itera la lista de libros para encontrar los que contienen en su titulo, autor o categorias el parametro string &#x27;query&#x27;.
      * Si no hay libros que coinicidan con la busqueda, retorna la lista completa de libros.
      * @param query Contenido que ingresa el usuario en un input de texto.
-     * @returns Emite un cambio en la lista de la variable Observable. Lista completa de libros ó Lista filtrada.
      */
 
     filterBooks(query: string) {
@@ -688,10 +688,11 @@ export class BookStoreService {
     }
 
     /**
+     * Emite un cambio en la lista de la variable Observable.
+     * 
      * Recibe por parametro el id de un libro y el nombre de una categoria que posee el libro, para eliminar la relación en la API.
      * Modifica la lista local primaryBooks insertando el libro con sus categorias actualizadas.
      * @param data Objeto que debe contener el id de un libro y el nombre de la categoria a eliminar -&gt; {id:1,category:&quot;example&quot;}.
-     * @returns Emite un cambio en la lista de la variable Observable.
      */
 
     updateCategories(data: any) {
