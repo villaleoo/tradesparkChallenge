@@ -26,9 +26,10 @@ export class BookStoreService {
     constructor(private client: HttpClient) { }
 
     /**
+     * Emite un cambio en la lista de la variable Observable.
+     * 
      * Obtiene la lista completa de libros de la API.
      * Almacena en las variables primaryBooks y leakedBooks la lista completa obtenida.
-     * Emite un cambio en la lista de la variable Observable.
      */
     fetchBooks(){
       this.client.get<Book[]>(`${this.BASE_URL}books/`)       
@@ -44,7 +45,6 @@ export class BookStoreService {
     }
 
     /**
-     * Retorna la lista filtrada de libros.
      * Si no hay elementos iniciales, ejecuta fetchBooks() para traerlos de la API.
      * @returns Lista de libros filtrada. Es de tipo Observable para poder suscribirse a cambios en la lista.
      */
@@ -57,10 +57,11 @@ export class BookStoreService {
     }
 
      /**
-     * Retorna la lista de libros que contienen en su titulo, autor o categorias el parametro string 'query'.
+     * Emite un cambio en la lista de la variable Observable. Lista completa de libros ó Lista filtrada.
+     * 
+     * Itera la lista de libros para encontrar los que contienen en su titulo, autor o categorias el parametro string 'query'.
      * Si no hay libros que coinicidan con la busqueda, retorna la lista completa de libros.
      * @param query Contenido que ingresa el usuario en un input de texto.
-     * @returns Emite un cambio en la lista de la variable Observable. Lista completa de libros ó Lista filtrada.
      */
 
     filterBooks(query: string) {
@@ -85,10 +86,11 @@ export class BookStoreService {
     }
 
     /**
+     * Emite un cambio en la lista de la variable Observable.
+     * 
      * Recibe por parametro el id de un libro y el nombre de una categoria que posee el libro, para eliminar la relación en la API.
      * Modifica la lista local primaryBooks insertando el libro con sus categorias actualizadas.
      * @param data Objeto que debe contener el id de un libro y el nombre de la categoria a eliminar -> {id:1,category:"example"}.
-     * @returns Emite un cambio en la lista de la variable Observable.
      */
 
     updateCategories(data: any) {

@@ -25,8 +25,8 @@ export class SearchBarComponent implements OnInit {
   }
 
   /**
+   * A traves de searchChange, ejecuta la funcion del padre y le envia el string ingresado en el input html.
    * Obtiene los caracteres ingresados por el usuario en el input del template.
-   * @returns Ejecuta la funcion del padre y le envia el string ingresado en el input html.
    */
   onSearchChange() {
     this.searchChange.emit(this.searchQuery); 

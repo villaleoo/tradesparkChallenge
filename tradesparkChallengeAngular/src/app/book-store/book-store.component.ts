@@ -34,8 +34,8 @@ export class BookStoreComponent implements OnInit{
   }
 
   /**
+   * Se comunica con el servicio de libros -> {@link BookStoreService} y le pasa la informacion que le da la etiqueta.
    * @param bookData Contiene id y nombre de la categoria de un libro. Proviene de la etiqueta {@link LabelCategoryComponent#onClick} clickeada.
-   * @returns Se comunica con el servicio de libros -> {@link BookStoreService} y le pasa la informacion que le da la etiqueta.
    */
   handleClickLabel(bookData: any){
  
@@ -59,9 +59,9 @@ export class BookStoreComponent implements OnInit{
   }
 
   /**
+   * Se comunica con el servicio de libros {@link BookStoreService} para enviarle la query que es utilizada para filtrar la tabla.
    * El parametro lo recibe desde la barra de busqueda: {@link SearchBarComponent} .
    * @param query String ingresado por el usuario que se utiliza para filtrar el contenido de la tabla del template. 
-   * @returns  Se comunica con el servicio de libros {@link BookStoreService} para enviarle la query que es utilizada para filtrar la tabla.
    */
   onFilterChange(query: string) {
     this.bookStoreService.filterBooks(query);  

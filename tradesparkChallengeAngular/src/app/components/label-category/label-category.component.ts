@@ -39,8 +39,8 @@ export class LabelCategoryComponent implements OnInit {
   }
 
   /**
+   * A traves de onClick, ejecuta la funcion del padre y le envia el id de esta etiqueta y su contenido (textContent) de tipo string.
    * Se ejecuta cuando se hace click en el button del template.
-   * @returns Emite un evento que contiene el id de la etiqueta y su contenido de tipo string. 
    */
   handleOnClick(): void{
 
