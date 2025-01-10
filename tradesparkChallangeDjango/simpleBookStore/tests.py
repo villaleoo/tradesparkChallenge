@@ -7,7 +7,7 @@ from .models import Book, Category, Author
 
 class BookCategoriesTest(APITestCase):
 
-    def mock_data(self):
+    def setUp(self):
         self.category = Category.objects.create(name="Testing")
         self.author = Author.objects.create(name="Anonymous")
         self.book = Book.objects.create(title="essential tests", author=self.author)
@@ -39,10 +39,11 @@ class BookCategoriesTest(APITestCase):
         self.assertEqual(response.status_code,status.HTTP_404_NOT_FOUND)
         self.assertEqual(response.data['message'], 'Book not found.')
 
+
     def test_category_not_found(self):
-        response = self.client.patch(self.url, {'category_name': 'Not found category'}, format='json')
+        response = self.client.patch(self.url, {'category_name': 'Fake category'}, format='json')
 
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-        self.assertEqual(response.data['message'], "No category found for 'not found category'.")
+        self.assertEqual(response.data['message'], "No category found for 'fake category'.")
     
    

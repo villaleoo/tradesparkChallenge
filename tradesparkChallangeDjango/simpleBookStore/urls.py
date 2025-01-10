@@ -10,6 +10,7 @@ router.register(r'books', BookViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('bookstore/books/<int:pk>/categories/', BookViewSet.as_view({'put': 'alternate_category', 'patch': 'alternate_category'}), name='categories'),
 ]
 
 
