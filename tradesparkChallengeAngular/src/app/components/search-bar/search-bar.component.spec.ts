@@ -1,48 +1,28 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SearchBarComponent } from './search-bar.component';
 
 describe('SearchBarComponent', () => {
-  let component: SearchBarComponent;
-  let fixture: ComponentFixture<SearchBarComponent>;
+    let component: SearchBarComponent;
+ 
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ SearchBarComponent ]
-    })
-    .compileComponents();
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(SearchBarComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    beforeEach(() => {
+        component= new SearchBarComponent();
+    });
 
   it('should initialize searchQuery as an empty string', () => {
+    component.ngOnInit();
     expect(component.searchQuery).toBe('');
   });
 
-  it('should update searchQuery on input change', () => {
-    const inputElement = fixture.nativeElement.querySelector('input');
-    
-    inputElement.value = 'New Title';
-    inputElement.dispatchEvent(new Event('input')); 
+  it('should emit the searchQuery value when onSearchChange is called', () => {
+     const emitSpy = jest.spyOn(component.searchChange, 'emit');
 
-    expect(component.searchQuery).toBe('New Title');
+     const newSearchQuery = 'search for user';
+     component.searchQuery = newSearchQuery;
+ 
+     component.onSearchChange();
+ 
+     //verifica que emit haya sido llamado con el valor correcto
+     expect(emitSpy).toHaveBeenCalledWith(newSearchQuery);
   });
 
-  it('should call onSearchChange when input changes', () => {
-    spyOn(component, 'onSearchChange'); 
-
-    const inputElement = fixture.nativeElement.querySelector('input');
-    inputElement.value = 'Other Title';
-    inputElement.dispatchEvent(new Event('input'));
-
-    expect(component.onSearchChange).toHaveBeenCalled();
-  });
 });

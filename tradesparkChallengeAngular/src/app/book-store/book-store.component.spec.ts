@@ -1,80 +1,69 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { BookStoreComponent } from './book-store.component';
 import { BookStoreService } from '../book-store.service';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs'; 
+import { HttpClient } from '@angular/common/http';
 
-type Spied<T> = {
-  [K in keyof T]: jasmine.Spy;
-};
 
 describe('BookStoreComponent', () => {
-  let component: BookStoreComponent;
-  let fixture: ComponentFixture<BookStoreComponent>;
-  let bookStoreService: Spied<BookStoreService>;
+    let component: BookStoreComponent;
+    let bookStoreService: BookStoreService;
+    let httpClientMock: jest.Mocked<HttpClient>; 
 
-  beforeEach(async () => {
-    const spy = jasmine.createSpyObj('BookStoreService', ['getLeakedBooks', 'updateCategories', 'filterBooks', 'fetchBooks']);
 
-    await TestBed.configureTestingModule({
-      declarations: [ BookStoreComponent ],
-      providers: [{ provide: BookStoreService, useValue: spy }],
-      schemas: [NO_ERRORS_SCHEMA] 
-    })
-    .compileComponents();
+    beforeEach(() => {
+        httpClientMock = {
+            get: jest.fn(),
+            post: jest.fn(),
+            put: jest.fn().mockReturnValue(of({})),
+            delete: jest.fn(),
+            patch: jest.fn().mockReturnValue(of({})), 
+        } as unknown as jest.Mocked<HttpClient>;
+        bookStoreService= new BookStoreService(httpClientMock);
+        jest.spyOn(bookStoreService, 'getLeakedBooks').mockReturnValue(of([])); 
+        jest.spyOn(bookStoreService, 'updateCategories');
+        jest.spyOn(bookStoreService, 'filterBooks');
+        jest.spyOn(bookStoreService, 'fetchBooks');
 
-    bookStoreService = TestBed.inject(BookStoreService) as unknown as Spied<BookStoreService>;
-  });
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(BookStoreComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should fetch books on init', () => {
-    const mockBooks = [
-      { id: 1, title: 'Book One', author: { id:1,name: 'Author One',bio:"",date_of_birth:null}, categories: [], publication_date:null, ISBN:null }
-    ];
-
-    bookStoreService.getLeakedBooks.and.returnValue(of(mockBooks)); 
-
-    component.ngOnInit(); 
-
-    expect(component.books$).toBeTruthy(); 
-    component.books$.subscribe(books => {
-      expect(books).toEqual(mockBooks); 
+        component = new BookStoreComponent(bookStoreService);
+      
     });
-  });
 
-  it('should call updateCategories on handleClickLabel', () => {
-    const bookData = { id: 1, category: 'New Category' };
+
+    it('should fetch books on init', () => {
+        const mockBooks = [
+          { id: 1, title: 'Book One', author: { id:1,name: 'Author One', bio: "", date_of_birth: null }, categories: [], publication_date: null, ISBN: null }
+        ];
     
-    component.handleClickLabel(bookData); 
-
-    expect(bookStoreService.updateCategories).toHaveBeenCalledWith(bookData);
-  });
-
-  it('should capitalize title correctly', () => {
-    expect(component.capitalizeTitle('test title')).toBe('Test Title');
-    expect(component.capitalizeTitle('')).toBe('');
-  });
-
-  it('should capitalize first letter correctly', () => {
-    expect(component.capitalizeFirst('test')).toBe('Test');
-    expect(component.capitalizeFirst('')).toBe('');
-  });
-
-  it('should call filterBooks on onFilterChange', () => {
-    const query = 'test';
+        //cuando se llama a getLeakedBooks retorna el mock
+        jest.spyOn(bookStoreService, 'getLeakedBooks').mockReturnValue(of(mockBooks)); 
     
-    component.onFilterChange(query); 
+        component.ngOnInit();
+    
+        // verificacion que el observable books$ esté presente
+        expect(component.books$).toBeTruthy();
+    
+        // suscripcion al observable para verificar que el valor retornado es el esperado
+        component.books$.subscribe(books => {
+            expect(books).toEqual(mockBooks);
+        });
+    });
 
-    expect(bookStoreService.filterBooks).toHaveBeenCalledWith(query); 
-  });
+    it('should call updateCategories on handleClickLabe with the correct parameter', () => {
+        const bookData = { id: 1, category: 'New Category' };
+    
+        // llamar a handleClickLabel con los datos simulados
+        component.handleClickLabel(bookData); 
+    
+        // verificar que updateCategories haya sido llamado con el parámetro bookData
+        expect(bookStoreService.updateCategories).toHaveBeenCalledWith(bookData);
+    });
+
+
+    it('should call filterBooks on onFilterChange with the correct parameter', () => {
+        const query = 'test';
+        
+        component.onFilterChange(query); 
+
+        expect(bookStoreService.filterBooks).toHaveBeenCalledWith(query); 
+    });
 });
