@@ -40,6 +40,6 @@ class BookSerializer(CapitalizeFieldsMixin, serializers.ModelSerializer):
 class AlternateCategorySerializer(serializers.Serializer):
     category_name = serializers.CharField(
         required=True,
-        max_length=255, 
+        max_length=100, 
         help_text="Name of the category you want to add or delete."
     )

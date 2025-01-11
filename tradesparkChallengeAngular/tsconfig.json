@@ -12,6 +12,7 @@
       "emitDecoratorMetadata": true,
       "lib": ["es2017", "dom"],
       "types": ["jest", "node"],
+      "skipLibCheck": true
     },
   "include": [
     "src/**/*.ts",
