@@ -13,17 +13,20 @@ import { tap } from 'rxjs/operators';
 })
 export class BookStoreService {
     private BASE_URL= 'http://localhost:8000/bookStore/';
+
+    private queryFilter: string='';
+    private booksFilters: Book[] = [];
     /**
      * Almacena localmente la totalidad de los libros obtenidos de la API.
      */
     private primaryBooks: Book[] = [];
-     /**
+    /**
      * Almacena la totalidad de los libros obtenidos ó la lista de libros filtrada.
      * Emite cambios a los componentes suscriptos.
-     */
-    private leakedBooks: BehaviorSubject<Book[]> = new BehaviorSubject<Book[]>([]);
-
-    constructor(private client: HttpClient) { }
+    */
+   private leakedBooks: BehaviorSubject<Book[]> = new BehaviorSubject<Book[]>([]);
+   
+   constructor(private client: HttpClient) { }
 
     /**
      * Emite un cambio en la lista de la variable Observable.
@@ -65,19 +68,19 @@ export class BookStoreService {
      */
 
     filterBooks(query: string) {
+      this.queryFilter=query;
+
       if (query === '') {
           this.leakedBooks.next(this.primaryBooks);
 
       } else {
 
-        const filterBooks = this.primaryBooks.filter(book => 
-          book.title.toLowerCase().includes(query.toLowerCase()) ||           
-          book.author.name.toLowerCase().includes(query.toLowerCase()) ||             
-          (book.categories && book.categories.some(cat => cat.name.toLowerCase().includes(query.toLowerCase())) )  
+        this.booksFilters = this.primaryBooks.filter(book => 
+          this.queryInBook(book,query) 
         );
 
-        if(filterBooks.length > 0){
-          this.leakedBooks.next(filterBooks);
+        if(this.booksFilters.length > 0){
+          this.leakedBooks.next(this.booksFilters);
         }else{
           this.leakedBooks.next(this.primaryBooks);
         }
@@ -90,6 +93,7 @@ export class BookStoreService {
      * 
      * Recibe por parametro el id de un libro y el nombre de una categoria que posee el libro, para eliminar la relación en la API.
      * Modifica la lista local primaryBooks insertando el libro con sus categorias actualizadas.
+     * Si el contenido que se muestra en pantalla esta siendo filtrado, emite la lista filtrada.
      * @param data Objeto que debe contener el id de un libro y el nombre de la categoria a eliminar -> {id:1,category:"example"}.
      */
 
@@ -100,17 +104,31 @@ export class BookStoreService {
         .pipe(
           tap((updatedBook) => {
             const index = this.primaryBooks.findIndex(book => book.id === updatedBook.id);
-    
+            const indexFilter = this.booksFilters.findIndex(book => book.id === updatedBook.id);
+
             if (index !== -1) {
-              this.primaryBooks.splice(index,1,updatedBook);
+                this.primaryBooks.splice(index,1,updatedBook);
+
+                if(this.queryInBook(updatedBook,this.queryFilter) && indexFilter !== -1 && this.queryFilter !== ''){
+                    this.booksFilters.splice(indexFilter,1,updatedBook);
+
+                    this.leakedBooks.next(this.booksFilters);
+                }else{
+                    this.leakedBooks.next(this.primaryBooks);
+                }
               
-              this.leakedBooks.next(this.primaryBooks);
             }
           })
         )
         .subscribe({
           error: (err) => console.error('Error updating book:', err),
         });
+    }
+
+    queryInBook(book:Book, query:string ){
+      return book.title.toLowerCase().includes(query.toLowerCase()) ||           
+      book.author.name.toLowerCase().includes(query.toLowerCase()) ||             
+      (book.categories && book.categories.some(cat => cat.name.toLowerCase().includes(query.toLowerCase()))) 
     }
 
  
