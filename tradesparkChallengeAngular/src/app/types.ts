@@ -19,3 +19,4 @@ export interface Book {
     publication_date: Date | null;
     ISBN: string | null;
 }
+
