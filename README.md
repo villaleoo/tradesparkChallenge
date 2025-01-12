@@ -18,7 +18,7 @@ Docker and docker-compose. for installation instructions see [here](https://docs
 ![example image](images/main_screen.png)
 
 ## Challenge resolution
-Todo lo  implementado ha sido testeado unitariamente y documentado. Ir a la [sección de testing](#testing-unitario) para ver información sobre testing y a la [sección de documentación](#seccion-de-enlace) para ver la documentación generada.
+Todo lo  implementado ha sido testeado unitariamente y documentado. Ir a la [sección de testing](#testing-unitario) para ver información sobre testing y a la [sección de documentación](#documentación) para ver la documentación generada.
 
 ### Requerimiento A
 - Construir un filtro sobre la tabla en la sección "Book store", el cual sea capaz de filtrar por título, autor o categoría.
@@ -82,7 +82,7 @@ Para el **proyecto angular** se utilizaron los frameworks y herramientas:
 - **Jest.js** ---> Para testing unitario de componentes y servicios. Docs.: [Jest](https://jestjs.io/docs/getting-started).
 - **CompoDoc** ---> Para generación de documentación para desarrolladores a traves de comentarios en código. Docs.: [Compodoc](https://compodoc.app/guides/getting-started.html).
 
-Para el **proyecto django** se utilizaron los frameworks:
+Para el **proyecto django** se utilizaron los frameworks y herramientas:
 - **Rest framework test** --> Para testing unitario de la funcion de entrada al servicio desarrollado. Docs.: [Django rest](https://www.django-rest-framework.org/api-guide/testing/).
 - **Swagger** --> Para generación de detalles y ejecución de pruebas a los endpoint que contiene el proyecto. Docs.: [Swagger](https://www.swagger.io/).
 ### Testing unitario 
