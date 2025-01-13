@@ -89,7 +89,7 @@ describe('BookStoreService', () => {
         });
       });
 
-    it('should add a category to the book and update the list of filtered books', () => {
+    it('should remove a category to the book and update the list of filtered books', () => {
         const mockBook: Book = {
             id: 1,
             title: 'Book One',
@@ -102,7 +102,7 @@ describe('BookStoreService', () => {
           // simulacion de la lista de libros en el servicio
           service['primaryBooks'] = [mockBook];
       
-          const updatedData = { id: 1, category: 'Software' };
+          const updatedData = { id: 1, category: 'New Category' };
           const espectData= {category_name:"software"};
       
           // simulacion de la respuesta de api
@@ -118,7 +118,7 @@ describe('BookStoreService', () => {
       
           // verificacion que el libro se haya actualizado en la lista filtrada
           service.getLeakedBooks().subscribe((books) => {
-            expect(books[0].categories.length).toEqual(2); 
+            expect(books[0].categories.length).toEqual(0); 
           });
 
     });
