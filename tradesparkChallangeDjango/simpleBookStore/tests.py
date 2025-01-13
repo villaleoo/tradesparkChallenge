@@ -14,15 +14,6 @@ class BookCategoriesTest(APITestCase):
         self.book.categories.add(self.category)
 
         self.url = reverse('categories', kwargs={'pk': self.book.pk}) 
-    
-    def test_add_category_to_book(self):
-        new_category = Category.objects.create(name='The test category')
-        
-        response = self.client.patch(self.url, {'category_name': 'The test category'}, format='json')
-
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.book.refresh_from_db()
-        self.assertIn(new_category, self.book.categories.all())  
 
     def test_remove_category_to_book(self):
         response = self.client.patch(self.url,{'category_name': "Testing"},format='json')

@@ -41,8 +41,8 @@ Todo lo  implementado ha sido testeado unitariamente y documentado. Ir a la [sec
 >
 > Para poder eliminar la Categoria de un Libro por **nombre**, se ajustó el modelo perteneciente a las categorias marcando como **clave única** al nombre. Es algo coherente no tener categorias con el mismo nombre; no así los libros los cuales sí pueden tener el mismo titulo/nombre.
 >
-> - Se optó por un **endpoint** de tipo **PATCH** y **PUT**. Es decir, la funcion responde a solicitudes de este tipo. 
-> - La funcion de respuesta fue agregada en el archivo **views.py** con el decorador **@action** .
+> - Se optó por un **endpoint** de tipo **PATCH** ya que se está modificando un subrecurso de Libro. 
+> - La funcion de respuesta ***remove_category*** fue agregada en el archivo **views.py** con el decorador **@action** .
 > - **URL** : ***localhost:8000/bookStore/books/:id/categories/***  ---> tiene este formato porque se entiende a la lista de categorias como un **subrecurso** de un Libro, la cual unicamente puede ser agregada o quitada del Libro, pero no modificada.
 > - El cuerpo de la solicitud debe contener el siguiente **json**, además del **id** del Libro en la URL:
 >
@@ -51,7 +51,6 @@ Todo lo  implementado ha sido testeado unitariamente y documentado. Ir a la [sec
 >       "category_name": "Software"
 >    }
 >
-> - **Para facilitar tests** con agregado y eliminacion de categorías, **el endpoint permite agregar y/o eliminar Categoria por nombre**. Si se le pasa el nombre de una categoria que el Libro no tiene la agrega, pero si la tiene la elimina. 
 
 
 ### Requerimiento C
@@ -120,7 +119,7 @@ Para el **proyecto django** se utilizaron los frameworks y herramientas:
 >- Funciona como un endpoint mas de la API.
 
 
-> Una vez solicitado el endpoint **localhost:8000/swagger** se abrirá una pantalla donde se pueden ver todos los endpoints, filtrarlos y ejecutarlos. Esta imagen muestra información del endpoint desarrollado:
+> Una vez solicitado el endpoint **localhost:8000/swagger/** se abrirá una pantalla donde se pueden ver todos los endpoints, filtrarlos y ejecutarlos. Esta imagen muestra información del endpoint desarrollado:
 
 ![example endpoint swagger image](images/endpoint_swagger.PNG)
 

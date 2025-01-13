@@ -10,6 +10,8 @@ router.register(r'books', BookViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('books/<int:pk>/categories/', BookViewSet.as_view({'patch': 'remove_category'}), name="categories")
+
 ]
 
 

@@ -37,9 +37,9 @@ class BookSerializer(CapitalizeFieldsMixin, serializers.ModelSerializer):
             book.categories.add(category)
         return book
     
-class AlternateCategorySerializer(serializers.Serializer):
+class RemoveCategorySerializer(serializers.Serializer):
     category_name = serializers.CharField(
         required=True,
         max_length=100, 
-        help_text="Name of the category you want to add or delete."
+        help_text="Name of the category to be removed."
     )
