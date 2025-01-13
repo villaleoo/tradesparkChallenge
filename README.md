@@ -43,7 +43,7 @@ Todo lo  implementado ha sido testeado unitariamente y documentado. Ir a la [sec
 >
 > - Se optó por un **endpoint** de tipo **PATCH** ya que se está modificando un subrecurso de Libro. 
 > - La funcion de respuesta ***remove_category*** fue agregada en el archivo **views.py** con el decorador **@action** .
-> - **URL** : ***localhost:8000/bookStore/books/:id/categories/***  ---> tiene este formato porque se entiende a la lista de categorias como un **subrecurso** de un Libro, la cual unicamente puede ser agregada o quitada del Libro, pero no modificada.
+> - **URL** : ***localhost:8000/bookStore/books/:id/categories/*** .
 > - El cuerpo de la solicitud debe contener el siguiente **json**, además del **id** del Libro en la URL:
 >
 >    ```json
