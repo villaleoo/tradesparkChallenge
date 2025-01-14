@@ -40,8 +40,13 @@ class BookViewSet(viewsets.ModelViewSet):
             book = self.get_object()
     
             category_name = request.data.get("category_name").strip().lower()
+            serializer = RemoveCategorySerializer(data=request.data)
+            
+            if not serializer.is_valid():
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
             category = Category.objects.get(name=category_name)
+            
 
         except Http404:
             return Response({"message": "Book not found."}, status=status.HTTP_404_NOT_FOUND)
